@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-This module contains a function to return 
+This module contains a function to return
 the string representation of a given float.
 """
 
