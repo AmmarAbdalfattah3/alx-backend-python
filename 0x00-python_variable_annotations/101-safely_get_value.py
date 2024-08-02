@@ -4,7 +4,7 @@ This module returns values, add type annotations to the function
 """
 
 
-from typing import Mapping, Any, Union, TypeVar
+from typing import Mapping, Any, Union, TypeVar, Hashable
 
 
 T = TypeVar('T')
