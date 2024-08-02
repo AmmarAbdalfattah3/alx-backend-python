@@ -1,30 +1,34 @@
 #!/usr/bin/env python3
 """
-This module returns values, add type annotations to the function
+This module returns values, add type annotations to the funtion
 """
 
 
-from typing import Mapping, Any, Union, TypeVar
+from typing import Mapping, TypeVar, Any, Union
 
-
+# Define a TypeVar to represent the type of the default value
 T = TypeVar('T')
 
 
 def safely_get_value(
-        dct: Mapping,
-        key: Any,
-        default: Union[T, None] = None
-) -> Union[Any, None]:
+                         dct: Mapping,
+                         key: Any,
+                         default: Union[T, None] = None
+                         ) -> Union[Any, T]:
     """
-    Safely retrieves a value from a dictionary based on a key.
+    Safely get a value from a dictionary given a key.
+    If the key is not present, return the default value.
 
     Args:
-        dct (Mapping[Hashable, T]): A dictionary-like mapping.
-        key (Hashable): The key.
-        default (Union[T, None], optional): The default value.
+    dct (Mapping[Any, Any]): A mapping (e.g., dictionary) from
+    which to get the value.
+    key (Any): The key whose associated value is to be returned.
+    default (Union[T, None], optional): The value to return if
+    the key is not found in the dictionary. Defaults to None.
 
     Returns:
-        Union[T, None]: The value associated with the key.
+    Union[Any, T]: The value associated with the key if present;
+    otherwise, the default value.
     """
     if key in dct:
         return dct[key]
