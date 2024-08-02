@@ -12,7 +12,7 @@ T = TypeVar('T')
 
 def safely_get_value(
         dct: Mapping,
-        key: Hashable,
+        key: Any,
         default: Union[T, None] = None
 ) -> Union[T, None]:
     """
