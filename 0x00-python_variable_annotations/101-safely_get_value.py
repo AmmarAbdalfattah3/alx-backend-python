@@ -4,14 +4,14 @@ This module returns values, add type annotations to the function
 """
 
 
-from typing import Mapping, Any, Union, TypeVar, Hashable
+from typing import Mapping, Any, Union, TypeVar
 
 
 T = TypeVar('T')
 
 
 def safely_get_value(
-        dct: Mapping[Hashable, T],
+        dct: Mapping,
         key: Hashable,
         default: Union[T, None] = None
 ) -> Union[T, None]:
