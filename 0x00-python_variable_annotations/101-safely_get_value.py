@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """
 This module returns values, add type annotations to the function
 """
@@ -6,13 +6,14 @@ This module returns values, add type annotations to the function
 
 from typing import Mapping, Any, Union, TypeVar
 
+
 T = TypeVar('T')
 
 
 def safely_get_value(
-    dct: Mapping[Hashable, T],
-    key: Hashable,
-    default: Union[T, None] = None
+        dct: Mapping[Hashable, T],
+        key: Hashable,
+        default: Union[T, None] = None
 ) -> Union[T, None]:
     """
     Safely retrieves a value from a dictionary based on a key.
