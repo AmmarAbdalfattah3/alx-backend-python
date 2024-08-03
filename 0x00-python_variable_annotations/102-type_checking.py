@@ -4,32 +4,30 @@ This module uses mypy to validate the following
 piece of code and apply any necessary changes.
 """
 
-from typing import List, Sequence, Union
+from typing import List
 
-
-def zoom_array(lst: Sequence[Union[int, float]],
-               factor: int = 2) -> List[Union[int, float]]:
+def zoom_array(lst: List[int], factor: int = 2) -> List[int]:
     """
-    Zoom (duplicate) elements in the list based on the given factor.
+    Zooms in on a list by repeating each element `factor` times.
 
     Args:
-        lst (List[Union[int, float]]): A list of integers
-        or floats to be zoomed.
-        factor (int, optional): The factor by which to
-        duplicate the elements. Defaults to 2.
+        lst (List[int]): The list to zoom in on.
+        factor (int, optional): The factor by which to zoom in. Defaults to 2.
 
     Returns:
-        List[Union[int, float]]: A list with each element
-        duplicated `factor` times.
+        List[int]: A new list where each element is repeated `factor` times.
     """
-    zoomed_in: List[Union[int, float]] = [
+    zoomed_in: List[int] = [
         item for item in lst
-        for _ in range(factor)
+        for i in range(factor)
     ]
     return zoomed_in
 
 
-# Sample usage
+# Example usage
 array = [12, 72, 91]
+
 zoom_2x = zoom_array(array)
-zoom_3x = zoom_array(array, 30)
+
+# Correcting the factor to be an integer
+zoom_3x = zoom_array(array, 3)
