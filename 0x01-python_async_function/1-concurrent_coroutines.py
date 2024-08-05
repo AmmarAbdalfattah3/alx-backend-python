@@ -7,7 +7,8 @@ n times with the specified max_delay.
 
 import asyncio
 from typing import List
-wait_random = __import__('0-basic_async_syntax.py').wait_random
+from importlib import import_module
+wait_random = import_module('0-basic_async_syntax.py').wait_random
 
 
 async def wait_n(n: int, max_delay: int) -> List[float]:
