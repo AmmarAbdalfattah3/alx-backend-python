@@ -11,21 +11,15 @@ import random
 
 
 async def async_generator():
-    """
-    Asynchronous generator that yields random numbers.
+     """
+    Asynchronous generator that yields random floating-point numbers.
 
     This coroutine asynchronously generates 10 random floating-point numbers.
-    It waits for 1 second between each generation.
+    It pauses for 1 second between each number generation.
 
     Yields:
         float: A random floating-point number between 0 and 10.
-
-    Example:
-        async for number in async_generator():
-            print(number)
     """
-    count = 0
-    while count < 10:
-        await asyncio.sleep(1)  # Asynchronously wait for 1 second
-        yield random.random() * 10  # Yield a random number between 0 and 10
-        count += 1
+    for _ in range(10):
+        await asyncio.sleep(1)
+        yield random.uniform(0, 10)
