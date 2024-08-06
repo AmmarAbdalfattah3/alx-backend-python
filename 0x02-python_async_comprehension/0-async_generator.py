@@ -8,9 +8,10 @@ then yield a random number between 0 and 10. Use the random module.
 
 import asyncio
 import random
+from typing import AsyncGenerator
 
 
-async def async_generator():
+async def async_generator() -> AsyncGenerator[float, None]:
     """
     Asynchronous generator that yields random floating-point numbers.
 
