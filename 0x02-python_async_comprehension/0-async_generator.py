@@ -11,7 +11,7 @@ import random
 
 
 async def async_generator():
-     """
+    """
     Asynchronous generator that yields random floating-point numbers.
 
     This coroutine asynchronously generates 10 random floating-point numbers.
