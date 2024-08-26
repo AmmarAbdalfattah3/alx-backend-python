@@ -3,7 +3,6 @@
 """
 
 
-
 import unittest
 from parameterized import parameterized
 from utils import access_nested_map
@@ -22,7 +21,7 @@ class TestAccessNestedMap(unittest.TestCase):
         """
         Tests the `access_nested_map` function
         to ensure it returns the correct values.
-        
+
         Parameters:
         - nested_map: The dictionary to traverse.
         - path: The tuple representing the path of keys to access.
@@ -32,3 +31,7 @@ class TestAccessNestedMap(unittest.TestCase):
         returns the expected value for given inputs.
         """
         self.assertEqual(access_nested_map(nested_map, path), expected)
+
+
+if __name__ == '__main__':
+    unittest.main()
