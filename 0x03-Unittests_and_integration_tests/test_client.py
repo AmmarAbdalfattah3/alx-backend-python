@@ -91,6 +91,60 @@ class TestGithubOrgClient(unittest.TestCase):
         result = client.has_license(repo, license_key)
         self.assertEqual(result, expected_result)
 
+        @classmethod
+    def setUpClass(cls):
+        """Set up the class by patching requests.get."""
+        cls.get_patcher = patch(
+            'requests.get', side_effect=cls.mocked_requests_get
+        )
+        cls.get_patcher.start()
+
+    @classmethod
+    def tearDownClass(cls):
+        """Tear down the class by stopping the patcher."""
+        cls.get_patcher.stop()
+
+    @staticmethod
+    def mocked_requests_get(url):
+        """
+        Mocked requests.get to return
+        predefined responses based on the URL.
+        """
+        mock_response = Mock()
+        if 'orgs' in url:
+            mock_response.json.return_value = org_payload
+        elif 'repos' in url:
+            mock_response.json.return_value = repos_payload
+        return mock_response
+
+    def test_public_repos(self):
+        """
+        Test that GithubOrgClient.public_repos
+        returns the expected repos.
+        """
+        client = GithubOrgClient('google')
+        with patch.object(
+            client,
+            '_public_repos_url',
+            return_value='fake_url'
+        ):
+            self.assertEqual(client.public_repos(), expected_repos)
+
+    def test_public_repos_with_license(self):
+        """
+        Test that GithubOrgClient.public_repos with
+        a license filter returns the correct repos.
+        """
+        client = GithubOrgClient('google')
+        with patch.object(
+            client,
+            '_public_repos_url',
+            return_value='fake_url'
+        ):
+            self.assertEqual(
+                client.public_repos(license="apache-2.0"), apache2_repos
+            )
+
 
 @parameterized_class([
     {"org_payload": org_payload,
