@@ -91,5 +91,67 @@ class TestGithubOrgClient(unittest.TestCase):
         self.assertEqual(result, expected_result)
 
 
+@parameterized_class([
+    {"org_payload": org_payload,
+     "repos_payload": repos_payload,
+     "expected_repos": expected_repos,
+     "apache2_repos": apache2_repos}
+])
+class TestIntegrationGithubOrgClient(unittest.TestCase):
+    """
+    Integration test for GithubOrgClient.public_repos method.
+
+    This test class mocks external requests and
+    tests the public_repos method.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        """Set up for the class, mocking requests.get
+           with specific payloads.
+        """
+        cls.get_patcher = patch(
+            'requests.get', side_effect=cls.mocked_requests_get
+            )
+        cls.get_patcher.start()
+
+    @classmethod
+    def tearDownClass(cls):
+        """Tear down the class by stopping the patcher."""
+        cls.get_patcher.stop()
+
+    @staticmethod
+    def mocked_requests_get(url):
+        """
+        Mocked requests.get function to return
+        specific payloads based on the URL.
+        """
+        mock_response = Mock()
+        if 'orgs' in url:
+            mock_response.json.return_value =
+            TestIntegrationGithubOrgClient.org_payload
+        elif 'repos' in url:
+            mock_response.json.return_value =
+            TestIntegrationGithubOrgClient.repos_payload
+        return mock_response
+
+    def test_public_repos(self):
+        """
+        Test GithubOrgClient.public_repos to
+        ensure it returns the expected repos.
+        """
+        client = GithubOrgClient('google')
+        self.assertEqual(client.public_repos(), self.expected_repos)
+
+    def test_public_repos_with_license(self):
+        """
+        Test GithubOrgClient.public_repos with a license filter.
+        """
+        client = GithubOrgClient('google')
+        self.assertEqual(
+            client.public_repos(license="apache-2.0"), self.apache2_repos
+            )
+
+
 if __name__ == "__main__":
     unittest.main()
