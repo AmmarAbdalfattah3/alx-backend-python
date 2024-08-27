@@ -7,8 +7,7 @@ import unittest
 from unittest.mock import patch, PropertyMock, Mock
 from parameterized import parameterized, parameterized_class
 from client import GithubOrgClient
-from fixtures import org_payload, repos_payload,
-expected_repos, apache2_repos
+from fixtures import org_payload, repos_payload, expected_repos, apache2_repos
 
 
 class TestGithubOrgClient(unittest.TestCase):
@@ -32,8 +31,8 @@ class TestGithubOrgClient(unittest.TestCase):
         org_data = client.org
 
         mock_get_json.assert_called_once_with(
-                f"https://api.github.com/orgs/{org_name}"
-                )
+            f"https://api.github.com/orgs/{org_name}"
+        )
         self.assertEqual(org_data, expected_json)
 
     @patch('client.GithubOrgClient.org', new_callable=PropertyMock)
@@ -42,8 +41,8 @@ class TestGithubOrgClient(unittest.TestCase):
         Test GithubOrgClient._public_repos_url returns the correct URL.
         """
         test_payload = {
-                "repos_url": "https://api.github.com/orgs/test_org/repos"
-                }
+            "repos_url": "https://api.github.com/orgs/test_org/repos"
+        }
         mock_org.return_value = test_payload
 
         client = GithubOrgClient("test_org")
@@ -53,9 +52,9 @@ class TestGithubOrgClient(unittest.TestCase):
 
     @patch('client.get_json')
     @patch(
-            'client.GithubOrgClient._public_repos_url',
-            new_callable=PropertyMock
-            )
+        'client.GithubOrgClient._public_repos_url',
+        new_callable=PropertyMock
+    )
     def test_public_repos(self, mock_public_repos_url, mock_get_json):
         """
         Test GithubOrgClient.public_repos returns the correct list of repos.
@@ -114,7 +113,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         """
         cls.get_patcher = patch(
             'requests.get', side_effect=cls.mocked_requests_get
-            )
+        )
         cls.get_patcher.start()
 
     @classmethod
@@ -152,7 +151,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         client = GithubOrgClient('google')
         self.assertEqual(
             client.public_repos(license="apache-2.0"), self.apache2_repos
-            )
+        )
 
 
 if __name__ == "__main__":
